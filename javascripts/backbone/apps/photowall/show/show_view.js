@@ -11,10 +11,6 @@ Pixlee.module('PhotowallApp.Show', function(Show, App, Backbone, Marionette, $, 
       },
       events:{
         "error": "imgError",
-        "load": "imgLoad",
-        "click": "onClick"
-      },
-      onClick:function(){
       },
       initialize:function(){
         animateCheck(this);
@@ -22,8 +18,6 @@ Pixlee.module('PhotowallApp.Show', function(Show, App, Backbone, Marionette, $, 
       imgError:function(e){
         e.target.style.display = 'none';
       },
-      imgLoad:function(e){
-      }
   });
   var PhotoCompositeView = Backbone.Marionette.CompositeView.extend({
       template: 'photowall_photoCompositeView',
@@ -37,7 +31,6 @@ Pixlee.module('PhotowallApp.Show', function(Show, App, Backbone, Marionette, $, 
   var isScrolledIntoView = function(el){
       var docViewTop = $(window).scrollTop();
       var docViewBottom = docViewTop + $(window).height();
-
       var elemTop = $(el).offset().top;
       var elemBottom = elemTop + $(el).height();
 
@@ -60,13 +53,8 @@ Pixlee.module('PhotowallApp.Show', function(Show, App, Backbone, Marionette, $, 
       initialize:function(){
         var that = this;
         $(window).scroll(function(){
-          // photoCompositeView.children.each(function(view){
-          //   animateCheck(view);
-          // });
-
           var topHeight = $("body").height() - window.innerHeight;
           if(topHeight - $(window).scrollTop() < 1000){
-            console.log("preload me");
             var len = photoCompositeView.collection.length;
             photoCompositeView.collection.add(that.collection.slice(len, len+incrementalLoad));
           }
